@@ -8,7 +8,6 @@ import { FiPhone } from "react-icons/fi";
 import { FiMail } from "react-icons/fi";
 import CustomSelect from "../components/CustomSelect";
 import { toast, Bounce } from "react-toastify";
-import { isValidPhoneNumber } from "libphonenumber-js";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -40,8 +39,12 @@ const Contact = () => {
     // Phone validation
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required.";
-    } else if (!isValidPhoneNumber(formData.phone)) {
-      newErrors.phone = "Invalid phone number.";
+    } else if (
+      !/^\+?\d{1,4}?[-.\s]?\(?\d{1,4}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
+        formData.phone
+      )
+    ) {
+      newErrors.phone = "Invalid phone number format.";
     }
 
     // Message validation

@@ -101,7 +101,7 @@ const StartProjectModal = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="lg:w-1/2 bg-primary-dark text-white px-4 py-8 md:px-8 rounded-lg shadow-lg">
+      <div className="md:w-2/3 lg:w-1/3 w-full mx-4 bg-primary-dark text-white px-4 py-8 md:px-8 rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-2xl font-bold">Start a Project</h3>
           <button
