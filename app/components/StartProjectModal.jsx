@@ -3,14 +3,13 @@
 import React, { useState, useEffect } from "react";
 import CustomSelect from "../components/CustomSelect";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { Bounce, toast } from "react-toastify";
 
 const StartProjectModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     projectType: null,
-    budget: null,
-    timeline: null,
     description: "",
     attachments: null,
   });
@@ -24,8 +23,6 @@ const StartProjectModal = ({ isOpen, onClose }) => {
         name: "",
         email: "",
         projectType: null,
-        budget: null,
-        timeline: null,
         description: "",
         attachments: null,
       });
@@ -41,9 +38,9 @@ const StartProjectModal = ({ isOpen, onClose }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validate form fields
+
     const newErrors = {};
     if (!formData.name) newErrors.name = "Name is required";
     if (!formData.email) newErrors.email = "Email is required";
@@ -57,10 +54,47 @@ const StartProjectModal = ({ isOpen, onClose }) => {
       return;
     }
 
-    // Handle form submission (e.g., send data to an API or email)
-    console.log("Form Data Submitted:", formData);
-    alert("Thank you for your submission! We will get back to you soon.");
-    onClose(); // Close the modal after submission
+    toast
+      .promise(
+        fetch("/api/sendEmail", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            formType: "startProject",
+            ...formData,
+          }),
+        }).then(async (response) => {
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to submit the form.");
+          }
+          return response.json();
+        }),
+        {
+          pending: "Submitting...",
+          success: "Submitted successfully! We will get back to you soon.",
+          error: "An error occurred. Please try again.",
+        },
+        {
+          position: "top-center",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        }
+      )
+      .then(() => {
+        onClose(); // Close the modal on success
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+      });
   };
 
   if (!isOpen) return null;

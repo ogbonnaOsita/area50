@@ -7,6 +7,8 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FiPhone } from "react-icons/fi";
 import { FiMail } from "react-icons/fi";
 import CustomSelect from "../components/CustomSelect";
+import { toast, Bounce } from "react-toastify";
+import { isValidPhoneNumber } from "libphonenumber-js";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -38,9 +40,8 @@ const Contact = () => {
     // Phone validation
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required.";
-    } else if (!/^\+?\d{7,15}$/.test(formData.phone)) {
-      newErrors.phone =
-        "Phone number must be 7-15 digits long and may start with a '+'.";
+    } else if (!isValidPhoneNumber(formData.phone)) {
+      newErrors.phone = "Invalid phone number.";
     }
 
     // Message validation
@@ -55,13 +56,67 @@ const Contact = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      console.log("Form submitted successfully!", formData);
-      // You can send the formData to your API or backend here.
-    }
+    if (!validateForm()) return;
+
+    // Show loading toast
+    toast
+      .promise(
+        fetch("/api/sendEmail", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            formType: "contact", // Add formType
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            selectedOption: formData.selectedOption.name,
+            message: formData.message,
+          }),
+        }).then(async (response) => {
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to submit the form.");
+          }
+          return response.json();
+        }),
+        {
+          pending: "Sending Email...",
+          success: "Email sent Successfully! We will get back to you soon.",
+          error: "An error occurred. Please try again.",
+        },
+        {
+          position: "top-center",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        }
+      )
+      .then(() => {
+        // Reset form on success
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+          selectedOption: {
+            id: 1,
+            name: "Make enquiry",
+          },
+        });
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+      });
   };
 
   const handleChange = (e) => {

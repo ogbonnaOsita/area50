@@ -1,0 +1,26 @@
+[
+  {
+    "ImageHref": "/chainstore.png",
+    "title": "Chainstore",
+    "link": "https://chainstore-ecru.vercel.app",
+    "alt": "Chainstore Project"
+  },
+  {
+    "ImageHref": "/briidge.png",
+    "title": "Briiidge",
+    "link": "https://briiidge.co",
+    "alt": "Briiidge Project"
+  },
+  {
+    "ImageHref": "/proagents.png",
+    "title": "Proagents",
+    "link": "https://proagents.io",
+    "alt": "Proagents Project"
+  },
+  {
+    "ImageHref": "/mafia-manes.png",
+    "title": "Mafia-Manes",
+    "link": "https://mafia-manes.vercel.app",
+    "alt": "Mafia-Manes Project"
+  }
+]

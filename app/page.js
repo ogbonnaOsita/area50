@@ -10,6 +10,7 @@ import Services from "./sections/Services";
 import ServicesCarousel from "./sections/ServicesCarousel";
 import Showcase from "./sections/Showcase";
 import WhyChooseUs from "./sections/WhyChooseUs";
+import { ToastContainer } from "react-toastify";
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +29,7 @@ const Home = () => {
       <Contact />
       {/* Render the modal */}
       <StartProjectModal isOpen={isModalOpen} onClose={closeModal} />
+      <ToastContainer />
     </div>
   );
 };

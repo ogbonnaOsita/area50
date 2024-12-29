@@ -1,5 +1,9 @@
+"use client";
+
 import React from "react";
+import Image from "next/image";
 import PortfolioCard from "../components/PortfolioCard";
+import projects from "../lib/projects";
 
 const Portfolio = () => {
   return (
@@ -35,33 +39,13 @@ const Portfolio = () => {
             </div>
 
             <div className="flex flex-wrap -mx-4">
-              {[
-                {
-                  ImageHref: "/chainstore.png",
-                  title: "Chainstore",
-                  link: "https://chainstore-ecru.vercel.app"
-                },
-                {
-                  ImageHref: "/briidge.png",
-                  title: "Briiidge",
-                  link: "https://briiidge.co"
-                },
-                {
-                  ImageHref: "/proagents.png",
-                  title: "Proagents",
-                  link: "https://proagents.io"
-                },
-                {
-                  ImageHref: "/mafia-manes.png",
-                  title: "Mafia-Manes",
-                  link: "https://mafia-manes.vercel.app"
-                },
-              ].map((project, index) => (
+              {projects.map((project, index) => (
                 <PortfolioCard
                   key={index}
                   ImageHref={project.ImageHref}
                   title={project.title}
                   link={project.link}
+                  alt={project.alt}
                 />
               ))}
             </div>
