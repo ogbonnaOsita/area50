@@ -30,6 +30,8 @@ export async function POST(request) {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
       },
+      //   logger: true,
+      //   debug: true,
     });
 
     // Email template for Start a Project form
@@ -67,12 +69,12 @@ export async function POST(request) {
 
     // Send the email
     await transporter.sendMail({
-      from: '"Portfolio Form" <no-reply@yourdomain.com>',
-      to: "your-email@example.com",
+      from: `"Area50" <${process.env.MAIL_FROM}>`,
+      to: process.env.MAIL_TO,
       subject:
         formType === "startProject"
-          ? "Area50: New Project Inquiry"
-          : "Area50: New Contact Inquiry",
+          ? "Area50: Start A New Project Inquiry"
+          : "Area50: New Contact Email Inquiry",
       html:
         formType === "startProject" ? startProjectTemplate : contactTemplate,
     });
