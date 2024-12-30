@@ -77,8 +77,8 @@ const About = () => {
             </div>
             {/* Call-to-Action Button */}
             <div className="mt-12">
-                <OutlineButton link="/" text="Contact Us" />
-              </div>
+              <OutlineButton link="#contact" text="Contact Us" />
+            </div>
           </div>
         </div>
       </div>
