@@ -67,18 +67,18 @@ const Navbar = ({ openModal }) => {
   return (
     <div className="bg-black sticky top-0 z-50">
       <div className="container flex justify-between items-center h-24 mx-auto px-4 text-white">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 lg:gap-2">
           <Link href="#showcase">
             <img
               src="./logo-full.png"
-              className="w-[150px] md:w-[180px]"
+              className="w-[150px] lg:w-[180px]"
               alt="Logo"
             />
           </Link>
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="hidden md:flex uppercase font-medium space-x-6">
+        <ul className="hidden md:flex uppercase font-medium space-x-6 text-sm lg:text-base">
           {navItems.map((item) => (
             <li
               key={item.id}
@@ -94,7 +94,7 @@ const Navbar = ({ openModal }) => {
         <div className="flex items-center gap-4">
           <button
             onClick={openModal}
-            className="text-white uppercase bg-gradient-to-r from-primary-main via-primary-darker to-primary-dark hover:bg-gradient-to-br font-medium rounded text-xs md:text-sm px-7 py-3 text-center mr-2 mb-2 transition-all duration-300 ease-in-out"
+            className="text-white uppercase bg-gradient-to-r from-primary-main via-primary-darker to-primary-dark hover:bg-gradient-to-br font-medium rounded text-xs lg:text-sm px-7 py-3 text-center mr-2 mb-2 transition-all duration-300 ease-in-out"
           >
             Start a project
           </button>
